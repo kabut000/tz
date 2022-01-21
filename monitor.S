@@ -41,9 +41,11 @@ monitor_init:
     mrs x12, sctlr_el3
     ubfx w12, w12, 25, 1    // w12[0] = EE
 
+    mov x3, 5
     orr w10, w10, #(1<<10)  // RW
     orr w3, w3, #0x3c0      // D, A, I, F
 
+    mov x1, 5
     orr w9, w9, #(1<<10)    // RW
     orr w1, w1, #0x3c0      // D, A, I, F
 

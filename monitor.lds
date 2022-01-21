@@ -31,5 +31,5 @@ SECTIONS
         *(COMMON)
     } > secure_sram AT> secure_rom
 
-    stack = 0x0e001000;
+    stack = 0x0e005000;
 }
