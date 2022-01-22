@@ -2,7 +2,8 @@
 .global monitor_init
 
 monitor_init:
-    msr vbar_el3, xzr
+    ldr x0, =monitor_vectors
+    msr vbar_el3, x0 
 
     mrs x0, sctlr_el3
     orr w0, w0, #(1<<19)    // WXN
@@ -68,3 +69,62 @@ monitor_init:
     msr spsr_el3, x1 
 
     eret 
+
+
+.section .vectors
+.align 11
+.global monitor_vectors
+
+monitor_vectors:
+    b .
+    .align 7
+    b .
+    .align 7
+    b .
+    .align 7
+    b .
+    .align 7
+
+    b .
+    .align 7
+    b .
+    .align 7
+    b .
+    .align 7
+    b .
+    .align 7
+
+sync_exception:
+    mrs x9, scr_el3 
+    mov w10, #0x78f         // RW, SIF, HCE, SMD, EA, FIQ, IRQ, NS
+    bic w9, w9, w10
+    orr w9, w9, #(1<<9)     // SIF
+    orr w10, w9, #1         // NS
+
+    mov x3, 5
+    orr w10, w10, #(1<<10)  // RW
+    orr w3, w3, #0x3c0      // D, A, I, F
+
+    mov x2, 0x60000000
+    msr elr_el3, x2 
+    msr scr_el3, x10 
+    msr spsr_el3, x3 
+
+    eret 
+
+    .align 7
+    b .
+    .align 7
+    b .
+    .align 7
+    b .
+    .align 7
+
+    b .
+    .align 7
+    b .
+    .align 7
+    b .
+    .align 7
+    b .
+    .align 7

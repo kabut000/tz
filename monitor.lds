@@ -14,6 +14,7 @@ SECTIONS
 
     .text : {
         *(.text)
+        *(.vectors)
     } > secure_rom
 
     .rodata : {
