@@ -25,11 +25,14 @@ monitor.bin: monitor.elf
 monitor.elf: $(OBJS)
 	$(CC) $(CFLAGS) $(LFLAGS) $^ -o $@
 
-monitor.o: monitor.S 
-	$(AS) -c $< -o $@
+.SUFFIXES: .c .o 
+.SUFFIXES: .S .o 
 
-%.o: %.c 
-	$(CC) -c $< -o $@
+.c.o: $< 
+	$(CC) -c $(CFLAGS) $<
+
+.S.o: $< 
+	$(CC) -c $(CFLAGS) $<
 
 clean:
 	make clean -C ./secure/
