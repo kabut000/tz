@@ -17,7 +17,7 @@ void *memcpy(void *dst, const void *src, long len){
 
 void *monitor_start(){
     void *secure_base = (void *)0x0e100000;
-    void *normal_base = (void *)0x60000000;
+    void *normal_base = (void *)0x40000000;
     void *simage_base = (void *)0x20000;
     void *nimage_base = (void *)0x40000;
 

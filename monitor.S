@@ -60,7 +60,7 @@ monitor_init:
 
     msr vbar_el1, xzr 
 
-    mov x2, 0x60000000
+    mov x2, 0x40000000
     add x11, sp, #CTX_SIZE 
     str x8, [x11, #CTX_SCTLR_EL1]
     str x10, [x11, #CTX_SCR_EL3]

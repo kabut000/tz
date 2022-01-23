@@ -11,13 +11,16 @@ LFLAGS = -static -T monitor.lds -Wl,--build-id=none
 
 all: flash.bin
 
-flash.bin: monitor.bin secure.bin 
+flash.bin: monitor.bin secure.bin nonsecure.bin
 	dd if=./monitor.bin of=flash.bin bs=4096 conv=notrunc
 	dd if=./secure/secure.bin of=flash.bin seek=32 bs=4096 conv=notrunc 
-	dd if=./QEMU_EFI.fd of=flash.bin seek=64 bs=4096 conv=notrunc
+	dd if=./nonsecure/nonsecure.bin of=flash.bin seek=64 bs=4096 conv=notrunc
 
 secure.bin:
 	make -C ./secure/
+
+nonsecure.bin:
+	make -C ./nonsecure/
 
 monitor.bin: monitor.elf
 	$(OBJCOPY) -O binary $< $@
@@ -36,4 +39,5 @@ monitor.elf: $(OBJS)
 
 clean:
 	make clean -C ./secure/
+	make clean -C ./nonsecure/
 	rm -f *.elf *.o *.bin
